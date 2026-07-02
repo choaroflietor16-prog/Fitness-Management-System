@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Log In — Kenfit{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+    <h1>Welcome Back</h1>
+    <p class="auth-sub">Log in to book sessions and check your plan.</p>
+
+    <form method="POST" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.email.label }}
+            {{ form.email(placeholder="you@example.com") }}
+            {% for error in form.email.errors %}<div class="form-errors">{{ error }}</div>{% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.password.label }}
+            {{ form.password(placeholder="Your password") }}
+            {% for error in form.password.errors %}<div class="form-errors">{{ error }}</div>{% endfor %}
+        </div>
+
+        <div class="form-check">
+            {{ form.remember_me() }} {{ form.remember_me.label }}
+        </div>
+
+        {{ form.submit(class="btn-primary btn-full") }}
+    </form>
+
+    <p class="auth-footer">New to Kenfit? <a href="{{ url_for('auth.register') }}">Start your free trial</a></p>
+</div>
+{% endblock %}

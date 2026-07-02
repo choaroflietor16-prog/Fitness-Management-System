@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Kenfit{% endblock %}
+
+{% block content %}
+<div class="dash-wrap">
+    <h1>Hey, {{ user.first_name }}</h1>
+    <span class="dash-role">{{ user.role }}</span>
+
+    <div class="dash-placeholder">
+        This is a placeholder. Your real dashboard — bookings, workout plans, meal plans,
+        and progress tracking — gets built in the next milestones.
+    </div>
+</div>
+{% endblock %}

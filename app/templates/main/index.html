@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Kenfit — Personal Training at Virgin Active{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-eyebrow">Virgin Active &middot; Bloemfontein</div>
+        <h1>Train with a plan. Not a guess.</h1>
+        <p>Book 1-on-1 sessions, join group training, and get workout and meal plans built around your goals — all in one place.</p>
+        <div class="hero-ctas">
+            <a href="{{ url_for('auth.register') }}" class="btn-primary">Start Your 5-Day Free Trial</a>
+            <a href="#plans" class="btn-secondary">View Plans</a>
+        </div>
+    </div>
+</section>
+
+<div class="stats-strip">
+    <div class="stat"><span class="stat-num">5</span><span class="stat-label">Day Free Trial</span></div>
+    <div class="stat"><span class="stat-num">1:1</span><span class="stat-label">Or Group Sessions</span></div>
+    <div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Track Your Progress</span></div>
+    <div class="stat"><span class="stat-num">0</span><span class="stat-label">Guesswork</span></div>
+</div>
+
+<section class="section">
+    <div class="section-eyebrow">How It Works</div>
+    <h2>Everything your training needs, sorted.</h2>
+    <p class="section-lead">One dashboard for booking, plans, and progress — whether you train solo or as part of a group.</p>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h3>Book Sessions</h3>
+            <p>Reserve 1-on-1 time or join a group session. Group bookings of 5 or more unlock a discount automatically.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Workout Plans</h3>
+            <p>Get a weekly plan built for you. Away on a trip? You'll still have a plan waiting, no session missed.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Meal Plans</h3>
+            <p>Nutrition guidance built around your specific goals, put together directly by your trainer.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Track Progress</h3>
+            <p>Log weight, measurements, and notes over time so you and your trainer can see what's working.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Training Camps</h3>
+            <p>Join outdoor camps and events, or train solo with the same plan — your call.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Reminders</h3>
+            <p>Never miss a session. Get a heads-up before every booking, automatically.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section plans-band" id="plans">
+    <div class="section-eyebrow">Membership</div>
+    <h2>Pick a plan. Cancel anytime.</h2>
+    <p class="section-lead">Every plan starts with a 5-day free trial — no card charged until it ends.</p>
+
+    <div class="plan-grid">
+        <div class="plan-card">
+            <div class="plan-name">Weekly</div>
+            <div class="plan-note">Pay as you go</div>
+        </div>
+        <div class="plan-card">
+            <div class="plan-name">Monthly</div>
+            <div class="plan-note">Most flexible</div>
+        </div>
+        <div class="plan-card">
+            <div class="plan-name">3 Months</div>
+            <div class="plan-note">Small saving</div>
+        </div>
+        <div class="plan-card featured">
+            <div class="plan-name">Annual</div>
+            <div class="plan-note">Best value — biggest discount</div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-band">
+    <h2>Your first 5 days are free.</h2>
+    <a href="{{ url_for('auth.register') }}" class="btn-secondary">Create Your Account</a>
+</section>
+{% endblock %}
