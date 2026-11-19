@@ -1,8 +1,14 @@
-venv/
 __pycache__/
 *.pyc
-instance/
+*.pyo
+.venv/
+venv/
+.pytest_cache/
 .env
+.env.*
+!.env.example
 .DS_Store
+instance/
 migrations/
 *.db
+*.sqlite*
