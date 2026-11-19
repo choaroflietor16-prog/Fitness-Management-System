@@ -1,47 +1,80 @@
-# Fitness Management System · Kenfit
+# Fitness Management System (Kenfit)
 
-A Flask foundation for a personal-training portal. This milestone implements account registration, sign-in, sign-out and a protected dashboard. New self-registered accounts receive the client role.
+A booking, workout, meal-plan, and progress-tracking platform for personal trainers — built first for Kenfit at Virgin Active, designed to be rebranded for other trainers later.
 
-## Application structure
+## Milestone 1 — Done
+- Project structure (app factory pattern, blueprints)
+- Database setup (SQLAlchemy + Flask-Migrate)
+- User model with roles (`admin`, `trainer`, `client`)
+- Authentication: register, login, logout (Flask-Login + Flask-WTF)
+- Landing page
+- Placeholder dashboard (redirect target after login)
 
-| Path | Responsibility |
-| --- | --- |
-| `run.py` | WSGI entry point invoking the Flask application factory. |
-| `config.py` and `.env.example` | Session key and database configuration, with SQLite for local development. |
-| `app/__init__.py` | Application factory, Flask-SQLAlchemy, Flask-Login, Flask-Migrate and blueprint registration. |
-| `app/auth/` | Registration and sign-in forms and routes. |
-| `app/main/` | Public home and authenticated dashboard. |
-| `app/models.py` | User model and Werkzeug password hashing. |
-| `app/templates/` and `app/static/` | Jinja views and CSS. |
+## Milestone 2 — Next
+- Booking system (1-on-1, group, camps)
+- Trainer availability calendar
 
-The user table stores an ID, first and last name, unique indexed email, password hash, role, creation timestamp and account status flag. The role helpers distinguish administrator, trainer and client. The current route flow is:
-
-| Route | Purpose |
-| --- | --- |
-| `/` | Public landing page |
-| `/auth/register` | Register a client account via GET/POST |
-| `/auth/login` | Sign in via GET/POST |
-| `/auth/logout` | Sign out of an authenticated session |
-| `/dashboard` | View the logged-in user's dashboard |
-
-## Local setup
+## Setup
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
+# 1. Create and activate a virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Create your .env file
 cp .env.example .env
+# then open .env and set a real SECRET_KEY
+
+# 4. Create the instance folder (holds the SQLite db)
+mkdir -p instance
+
+# 5. Initialize the database
+flask db init
+flask db migrate -m "Initial migration - users table"
+flask db upgrade
+
+# 6. Run the app
+python run.py
 ```
 
-Create the local SQLite directory with `mkdir -p instance`. Set `SECRET_KEY` in `.env` to a fresh private value. The example uses `DATABASE_URL=sqlite:///kenfit.db`. For a fresh checkout, bootstrap migrations locally because the repository tree has no migration directory:
+Visit `http://127.0.0.1:5000` — you should see the landing page.
+Register an account at `/auth/register`, then log in at `/auth/login`.
 
-```bash
-python -m flask --app run db init
-python -m flask --app run db migrate -m "Create users"
-python -m flask --app run db upgrade
-python -m flask --app run
+## Project structure
+
+```
+Fitness-Management-System/
+├── app/
+│   ├── __init__.py        # App factory, extensions, blueprint registration
+│   ├── models.py          # User model (role: admin / trainer / client)
+│   ├── auth/               
+│   │   ├── forms.py        # RegisterForm, LoginForm
+│   │   └── routes.py       # /auth/register, /auth/login, /auth/logout
+│   ├── main/
+│   │   └── routes.py       # / (landing page), /dashboard (placeholder)
+│   ├── templates/
+│   │   ├── base.html
+│   │   ├── auth/
+│   │   └── main/
+│   └── static/
+│       ├── css/style.css
+│       ├── js/
+│       └── images/
+├── config.py
+├── run.py
+├── requirements.txt
+└── .env.example
 ```
 
-Open `http://127.0.0.1:5000/`. If a migration directory already exists, use the existing revisions and run `db upgrade`. Check registration, duplicate-email handling, invalid credentials, direct dashboard access while signed out and logout using synthetic accounts. If SQLite reports a missing user table, check the active database URL and migration status.
-
-The application factory and blueprints provide a foundation for adding workflows independently. Next steps include tracking a verified baseline migration, building the booking and trainer availability calendar, and adding trainer dashboards, session credits and billing.
+## Notes for next session
+- New users all register as `role='client'` for now. Trainer/admin accounts (Kenfit himself,
+  and any trainers he adds later) will be created directly in the DB or via an admin-only
+  route once we build role management — no public trainer signup.
+- `dashboard.html` is a placeholder. In Milestone 3/4 this splits into a real client
+  dashboard and trainer dashboard based on `current_user.role`.
+- Colour scheme is currently hardcoded to Virgin Active red/black/white in `style.css`.
+  Making this dynamic (per Kenfit's request) needs a `Theme`/settings model — planned
+  for the theming milestone.
